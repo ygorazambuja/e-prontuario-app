@@ -4,9 +4,9 @@
       <logo />
       <v-layout align-center justify-center>
         <v-flex xs12 sm8 md4>
-          <v-card class="elevation-12" shaped>
-            <v-card-title class="login-title">
-              <h1>Entrar</h1>
+          <v-card class="login-title elevation-12 pa-5" shaped>
+            <v-card-title class="pa-5 mx-auto">
+              <h1 class="pt-5 pb-5">E-Prontuario</h1>
             </v-card-title>
             <v-card-text>
               <v-form>
@@ -32,9 +32,7 @@
             </v-card-text>
             <v-card-actions>
               <v-layout align-center justify-center>
-                <v-btn large class="primary" to="home">
-                  Entrar
-                </v-btn>
+                <v-btn large class="primary" to="home"> Entrar </v-btn>
               </v-layout>
             </v-card-actions>
           </v-card>
@@ -53,20 +51,20 @@ export default {
     login: "",
     password: "",
     rules: {
-      required: value => !!value || "Não pode ser vazio.",
-      min: v => v.length >= 8 || "Minimo de 8 Caracteres"
-    }
-  })
+      required: (value) => !!value || "Não pode ser vazio.",
+      min: (v) => v.length >= 8 || "Minimo de 8 Caracteres",
+    },
+  }),
 };
 </script>
 
 <style>
 .login-title {
-  padding: 20px;
   display: flex;
   justify-content: center;
+  align-content: center;
 }
-.login-title > h1 {
+.login-title h1 {
   color: #0088b7;
 }
 </style>
