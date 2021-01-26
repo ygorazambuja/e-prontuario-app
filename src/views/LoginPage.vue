@@ -3,8 +3,8 @@
     <v-container fluid>
       <logo />
       <v-layout align-center justify-center>
-        <v-flex xs12 sm8 md4>
-          <v-card class="login-title elevation-12 pa-5" shaped>
+        <v-flex xs12 sm8 md6>
+          <v-card class="login-title elevation-12 pa-5 flex-column" shaped>
             <v-card-title class="pa-5 mx-auto">
               <h1 class="pt-5 pb-5">E-Prontuario</h1>
             </v-card-title>
