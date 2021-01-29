@@ -21,7 +21,7 @@
       </v-list-item>
     </v-list>
     <v-divider></v-divider>
-    <v-list rounded>
+    <v-list rounded nav dense>
       <v-list-group :value="false" rounded>
         <template v-slot:activator>
           <v-list-item-title>
@@ -50,18 +50,8 @@ export default {
   props: ["drawer"],
   data: () => ({
     group: null,
-    documentos,
-  }),
-  methods: {
-    onDrawerClick() {
-      this.$emit("onDrawerClick");
-    },
-  },
-  watch: {
-    drawer: function() {
-      this.onDrawerClick();
-    },
-  },
+    documentos
+  })
 };
 </script>
 
