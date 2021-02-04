@@ -1,12 +1,19 @@
 <template>
   <v-app>
-    <v-app-bar app clipped-right flat height="72">
+    <v-app-bar app clipped-right flat height="72" color="primary" dark>
+      <v-btn icon @click="toogleDrawer" app>
+        <v-icon>
+          mdi-menu
+        </v-icon>
+      </v-btn>
       <v-spacer></v-spacer>
 
       <v-responsive max-width="300">
         <v-autocomplete
           v-model="select"
           :items="documentos"
+          item-text="titulo"
+          item-value="symbol"
           :search-input.sync="search"
           cache-items
           class="mx-4"
@@ -22,10 +29,10 @@
       <switch-theme />
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" app width="300" permanent>
+    <v-navigation-drawer app width="300" v-model="drawer">
       <v-card height="128" width="100%">
         <v-card-title>{{ usuario.nome }} </v-card-title>
-        <v-card-subtitle>{{ usuario.emailAlternativo }}</v-card-subtitle>
+        <v-card-subtitle>RGA: {{ usuario.rga }}</v-card-subtitle>
       </v-card>
 
       <v-list shaped>
@@ -39,10 +46,10 @@
     </v-navigation-drawer>
 
     <v-main>
-      <documento :teste="search" />
+      <documento :titulo="select" />
     </v-main>
     <v-footer app>
-      <h5>© Copyright Capitalismo</h5>
+      <h5>© Copyright E-Prontuario</h5>
     </v-footer>
   </v-app>
 </template>
@@ -58,7 +65,7 @@ export default {
   data: () => ({
     documentos,
     drawer: true,
-    select: "",
+    select: {},
     search: ""
   }),
   methods: {
@@ -66,10 +73,19 @@ export default {
     doLogout() {
       this.ActionDeleteGlobalUser();
       this.$router.push("/");
+    },
+    toogleDrawer() {
+      this.drawer = !this.drawer;
     }
   },
   computed: {
     ...mapState("login", ["usuario"])
+  },
+  watch: {
+    select(val) {
+      console.log(typeof this.select);
+      console.log(val);
+    }
   }
 };
 </script>
