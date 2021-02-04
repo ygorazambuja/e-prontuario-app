@@ -24,8 +24,8 @@
                 <v-text-field
                   outlined
                   v-model="passaporte"
-                  name="rga"
-                  label="RGA"
+                  name="passaporte"
+                  label="Passaporte UFMS"
                 ></v-text-field>
                 <v-text-field
                   outlined
@@ -48,7 +48,6 @@
                   <v-progress-circular
                     class="ml-5"
                     indeterminate
-                    color="amber"
                     v-if="loading"
                   ></v-progress-circular>
                 </v-btn>
