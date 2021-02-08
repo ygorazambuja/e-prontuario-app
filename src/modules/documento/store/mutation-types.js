@@ -1,0 +1,5 @@
+export const GET_GLOBAL_DOCUMENTOS = "DOC/GET_GLOBAL";
+
+export const GET_DOCUMENTO = "DOC/GET_DOCUMENTO";
+
+export const SET_DOCUMENTO = "DOC/SET_DOCUMENTO";

@@ -37,6 +37,7 @@
                   label="Senha"
                   hint="Minimo de 8 Caracteres"
                   counter
+                  @keypress.enter="doLogin"
                   @click:append="show1 = !show1"
                 ></v-text-field>
               </v-form>
@@ -45,11 +46,6 @@
               <v-layout align-center justify-center>
                 <v-btn large class="primary" @click="doLogin">
                   Entrar
-                  <v-progress-circular
-                    class="ml-5"
-                    indeterminate
-                    v-if="loading"
-                  ></v-progress-circular>
                 </v-btn>
               </v-layout>
             </v-card-actions>
@@ -57,6 +53,9 @@
         </v-flex>
       </v-layout>
     </v-container>
+    <v-overlay :value="loading">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </v-main>
 </template>
 
@@ -78,7 +77,6 @@ export default {
       min: v => v.length >= 8 || "Minimo de 8 Caracteres"
     }
   }),
-
   methods: {
     ...mapActions("login", ["ActionSetGlobalUser"]),
     async doLogin() {
