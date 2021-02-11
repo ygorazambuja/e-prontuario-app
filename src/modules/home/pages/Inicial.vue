@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import { documentos } from "@/constants/documentos.js";
+import { documentos } from "../../../constants/documentos";
 import { mapActions, mapState } from "vuex";
-import MainBar from "../../../components/MainBar.vue";
+import MainBar from "@/shared/components/MainBar.vue";
 export default {
   components: { MainBar },
   data: () => ({
@@ -28,10 +28,7 @@ export default {
   mounted() {
     this.ActionGetGlobalDocumentos();
   },
-  created() {
-    console.log(this.token);
-    console.log(this.usuario);
-  }
+  created() {}
 };
 </script>
 

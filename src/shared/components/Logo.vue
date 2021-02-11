@@ -5,8 +5,8 @@
       max-height="190px"
       :src="
         isDark
-          ? require('../assets/ufms_logo_negativo_assinatura_vertical_rgb.png')
-          : require('../assets/ufms_logo_positivo_assinatura_vertical_rgb.png')
+          ? require('../../assets/ufms_logo_negativo_assinatura_vertical_rgb.png')
+          : require('../../assets/ufms_logo_positivo_assinatura_vertical_rgb.png')
       "
       contain
     />
@@ -16,14 +16,14 @@
 <script>
 export default {
   data: () => ({
-    isDark: false,
+    isDark: false
   }),
 
   watch: {
     "$vuetify.theme.dark"(val) {
       this.isDark = !val;
-    },
-  },
+    }
+  }
 };
 </script>
 

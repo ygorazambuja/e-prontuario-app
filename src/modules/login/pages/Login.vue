@@ -60,9 +60,9 @@
 </template>
 
 <script>
-import Logo from "@/components/Logo.vue";
+import Logo from "@/shared/components/Logo.vue";
 import { mapActions } from "vuex";
-import SwitchTheme from "../../../components/SwitchTheme.vue";
+import SwitchTheme from "@/shared/components/SwitchTheme.vue";
 export default {
   components: { Logo, SwitchTheme },
   data: () => ({

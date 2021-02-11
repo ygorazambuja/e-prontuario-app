@@ -8,7 +8,7 @@
 <script>
 import "@koumoul/vjsf/lib/VJsf.css";
 import "@koumoul/vjsf/lib/deps/third-party.js";
-import CustomFooter from "./components/CustomFooter.vue";
+import CustomFooter from "@/shared/components/CustomFooter.vue";
 
 export default {
   components: { CustomFooter }

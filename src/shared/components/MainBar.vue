@@ -30,10 +30,13 @@
               Novo Documento
             </v-list-item-title>
           </v-list-item>
-
           <v-list-item>
-            <v-list-item-title> Configurações </v-list-item-title>
+            <v-list-item-title>Paciente</v-list-item-title>
           </v-list-item>
+          <v-list-item>
+            <v-list-item-title>Configurações </v-list-item-title>
+          </v-list-item>
+
           <v-list-item @click="doLogout">
             <v-list-item-title> Sair </v-list-item-title>
           </v-list-item>
@@ -93,9 +96,12 @@ export default {
           this.$router.push("/home/novoDocumento");
           break;
         case 2:
-          this.$router.push("/configuracoes");
+          this.$router.push("/paciente");
           break;
         case 3:
+          this.$router.push("/configuracoes");
+          break;
+        case 4:
           this.doLogout();
           break;
         default:

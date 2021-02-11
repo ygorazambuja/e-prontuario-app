@@ -1,4 +1,5 @@
 import { routes as documento } from "../documento";
+import { routes as paciente} from '../paciente'
 
 export default [
   {
@@ -7,6 +8,7 @@ export default [
     component: () => import("./pages/Inicial"),
     children: [
       ...documento,
+      ...paciente,
       {
         path: "/",
         name: "Home",
