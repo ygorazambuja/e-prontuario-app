@@ -14,8 +14,8 @@
 
     <v-navigation-drawer app width="300" v-model="drawer">
       <v-card height="128" width="100%">
-        <v-card-title>{{ usuario.nome }} </v-card-title>
-        <v-card-subtitle>RGA: {{ usuario.rga }}</v-card-subtitle>
+        <v-card-title>{{ usuario && usuario.nome }} </v-card-title>
+        <v-card-subtitle>RGA: {{ usuario && usuario.nome }}</v-card-subtitle>
       </v-card>
 
       <v-list shaped>
@@ -27,7 +27,7 @@
           </v-list-item>
           <v-list-item>
             <v-list-item-title>
-              Novo Documento
+              Documento
             </v-list-item-title>
           </v-list-item>
           <v-list-item>
@@ -36,7 +36,6 @@
           <v-list-item>
             <v-list-item-title>Configurações </v-list-item-title>
           </v-list-item>
-
           <v-list-item @click="doLogout">
             <v-list-item-title> Sair </v-list-item-title>
           </v-list-item>
@@ -93,7 +92,7 @@ export default {
           this.$router.push("/home");
           break;
         case 1:
-          this.$router.push("/home/novoDocumento");
+          this.$router.push("/home/documento");
           break;
         case 2:
           this.$router.push("/paciente");

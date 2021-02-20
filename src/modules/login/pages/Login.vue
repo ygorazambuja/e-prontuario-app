@@ -10,7 +10,7 @@
             color="pink"
             dark
             border="top"
-            icon="mdi-home"
+            icon="mdi-close-thick"
             transition="scale-transition"
           >
             {{ error }}
@@ -63,6 +63,7 @@
 import Logo from "@/shared/components/Logo.vue";
 import { mapActions } from "vuex";
 import SwitchTheme from "@/shared/components/SwitchTheme.vue";
+
 export default {
   components: { Logo, SwitchTheme },
   data: () => ({
@@ -74,7 +75,7 @@ export default {
     loading: false,
     rules: {
       required: value => !!value || "Não pode ser vazio.",
-      min: v => v.length >= 8 || "Minimo de 8 Caracteres"
+      min: v => v.length >= 6 || "Minimo de 8 Caracteres"
     }
   }),
   methods: {
@@ -90,9 +91,9 @@ export default {
           this.loading = false;
           this.$router.push("/home");
         })
-        .catch(err => {
+        .catch(() => {
           this.alert = true;
-          this.error = err;
+          this.error = "Não foi possivel logar";
           this.loading = false;
           setTimeout(() => {
             this.alert = false;

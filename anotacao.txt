@@ -1,0 +1,7 @@
+mudar o passo 2 tabela com melhor apresentação dos dados
+
+
+Documento -> 
+    Grid
+    Novo Documento
+    Editar

@@ -1,6 +1,5 @@
 
 class NovoPacienteUsecase { 
-    
     constructor(service, paciente) { 
         this.service = service;
         this.paciente = paciente

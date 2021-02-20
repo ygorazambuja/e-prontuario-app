@@ -1,52 +1,52 @@
 <template>
   <v-container>
-    <v-container v-if="documentoSelecionado.titulo">
-      <div class="d-flex pr-5 pl-5 justify-space-between">
-        <v-btn icon @click="goBack">
-          <v-icon>
-            mdi-arrow-left
-          </v-icon>
-        </v-btn>
-        <h2>
-          {{ documentoSelecionado.titulo }}
-          <v-spacer> </v-spacer>
-        </h2>
-      </div>
-      <v-form v-model="valid" class="pa-4">
-        <v-jsf v-model="model" :schema="schema"></v-jsf>
-        <v-btn class="pa-5 mt-10">
-          salvar
-        </v-btn>
-      </v-form>
-    </v-container>
+    <v-row class="d-flex justify-center pl-6 pr-6 pt-6" fluid dense>
+      <v-col
+        ><v-text-field
+          dense
+          label="Pesquise"
+          outlined
+          append-icon="mdi-magnify"
+        >
+        </v-text-field>
+      </v-col>
+      <v-col cols="3">
+        <v-select outlined dense label="Select"> </v-select>
+      </v-col>
+    </v-row>
+    <v-row class="d-flex justify-end pl-6 pr-6  ma-0" fluid dense>
+      <v-btn color="success" to="novoDocumento">
+        <v-icon>
+          mdi-plus
+        </v-icon>
+        Adicionar novo
+      </v-btn>
+    </v-row>
+    <v-row class="d-flex  pl-6 pr-6 pt-6" fuid dense>
+      <v-col class="justify-center">
+        <h2>Documentos Cadastrados</h2>
+        <v-data-table
+          :headers="headers"
+          :items="desserts"
+          :items-per-page="5"
+          class="elevation-1"
+          no-results-text="Vazio"
+        ></v-data-table>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script>
-import VJsf from "@koumoul/vjsf/lib/VJsf.js";
-import contencaoLeito from "../../../constants/documentos/contencaoLeito";
-import { mapActions, mapState } from "vuex";
-
 export default {
-  components: { VJsf },
   data: () => ({
-    model: {},
-    valid: false,
-    schema: {
-      ...contencaoLeito
-    },
-    teste: {}
-  }),
-  methods: {
-    ...mapActions("documento", ["ActionSetDocumento"]),
-    goBack() {
-      this.ActionSetDocumento({});
-      this.$router.go(-1);
-    }
-  },
-  computed: {
-    ...mapState("documento", ["documentoSelecionado"])
-  }
+    desserts: [{}],
+    headers: [
+      {
+        text: "Nome"
+      }
+    ]
+  })
 };
 </script>
 

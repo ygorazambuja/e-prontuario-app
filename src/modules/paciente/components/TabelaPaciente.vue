@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data: () => ({
     page: 0,
@@ -53,8 +52,10 @@ export default {
   methods: {
     loadData(page, size) {
       this.loading = true;
-      axios
-        .get(`/paciente?page=${page}&size=${size}`, {})
+      this.$http
+        .get(
+          `http://localhost:8080/eprontuario-api/paciente?page=${page}&size=${size}`
+        )
         .then(({ data }) => {
           this.pacientesResponse = data;
           this.loading = false;

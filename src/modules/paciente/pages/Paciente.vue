@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import NovoPaciente from "./components/NovoPaciente.vue";
-import TabelaPaciente from "./components/TabelaPaciente.vue";
+import NovoPaciente from "../components/NovoPaciente.vue";
+import TabelaPaciente from "../components/TabelaPaciente.vue";
 export default {
   components: { NovoPaciente, TabelaPaciente }
 };

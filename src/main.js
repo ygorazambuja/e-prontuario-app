@@ -5,11 +5,28 @@ import router from "./router";
 import "./registerServiceWorker";
 import "es6-promise/auto";
 import store from "./store";
-import axios from "axios";
+import Axios from "axios";
 
-axios.defaults.headers["Authorization"] =
-  "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBUEkgRS1QUk9OVFVBUklPIFVGTVMiLCJzdWIiOiIxIiwiaWF0IjoxNjEyOTk2ODU3LCJleHAiOjE2MTMwODMyNTd9.oUVepeh8xAUkgV4wz-Sz2enzjp7F4KRKMOmpcS4XXVo";
-axios.defaults.baseURL = 'http://localhost:8080/eprontuario-api'
+
+Vue.$http = new Axios.create({ baseURL: 'http://localhost:8080/eprontuario-api'});
+
+Object.defineProperty(Vue.prototype, '$http', { 
+  get() { 
+    return Axios;
+  }
+})
+
+Axios.interceptors.request.use(function(config) {
+  const token = store.state.login.token;
+  if(token) {
+      config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, function(err) {
+  return Promise.reject(err);
+});
+
+
 
 Vue.config.productionTip = false;
 
