@@ -12,5 +12,9 @@ export default [
     path: 'novoDocumento',
     name: "NovoDocumento",
     component: () => import('./pages/NovoDocumento')
+  },{
+    path: 'documento/:titulo',
+    name: 'PreencherDocumento',
+    component: () => import('./pages/PreencherDocumento')
   }
 ];

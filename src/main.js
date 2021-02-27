@@ -26,8 +26,6 @@ Axios.interceptors.request.use(function(config) {
   return Promise.reject(err);
 });
 
-
-
 Vue.config.productionTip = false;
 
 new Vue({

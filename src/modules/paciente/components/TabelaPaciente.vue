@@ -14,27 +14,25 @@
     <v-data-table
       no-data-text="Nada para mostrar"
       :headers="headers"
+      :options.sync="options"
       :items="pacientesResponse.content"
       class="elevation-1"
+      :items-per-page="options.itemsPerPage"
+      :server-items-length="pacientesResponse.totalElements"
       :page.sync="page"
-      :items-per-page.sync="pacientesPerPage"
     ></v-data-table>
-
-    <v-pagination
-      v-model="page"
-      :length="pacientesResponse.totalPages"
-    ></v-pagination>
   </v-container>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data: () => ({
     page: 0,
-    pacientesPerPage: 10,
     alert: false,
     loading: false,
     pacientesResponse: {},
+    options: {},
     error: "",
     headers: [
       {
@@ -48,7 +46,9 @@ export default {
       }
     ]
   }),
-
+  computed: {
+    ...mapState("paciente", ["paciente"])
+  },
   methods: {
     loadData(page, size) {
       this.loading = true;

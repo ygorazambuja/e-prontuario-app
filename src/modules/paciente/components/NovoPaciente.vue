@@ -49,6 +49,7 @@ export default {
           cpf: this.cpf
         };
         this.ActionAddPaciente(paciente);
+        this.$refs.form.reset();
       }
     },
     ...mapActions("paciente", ["ActionAddPaciente"])

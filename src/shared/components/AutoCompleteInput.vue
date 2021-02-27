@@ -2,7 +2,7 @@
   <v-responsive max-width="300">
     <v-autocomplete
       v-model="select"
-      :items="documentos"
+      :items="titulos"
       item-text="titulo"
       item-value="symbol"
       :search-input.sync="search"
@@ -30,17 +30,13 @@ export default {
     ...mapActions("documento", ["ActionSetDocumento"])
   },
   computed: {
-    ...mapState("documento", ["documentos"])
+    ...mapState("documento", ["titulos"])
   },
   watch: {
     select(val) {
-      const [documento] = this.documentos.filter(
-        documento => documento.titulo === val
-      );
-      this.ActionSetDocumento(documento);
       this.search = "";
-      if (this.$route.path !== "/home/documento") {
-        this.$router.push("/home/documento");
+      if (this.$route.path !== `/home/documento/${val}`) {
+        this.$router.push(`/home/documento/${val}`);
       }
     }
   }

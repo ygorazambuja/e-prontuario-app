@@ -7,6 +7,7 @@
           label="Pesquise"
           outlined
           append-icon="mdi-magnify"
+          v-model="search"
         >
         </v-text-field>
       </v-col>
@@ -27,26 +28,47 @@
         <h2>Documentos Cadastrados</h2>
         <v-data-table
           :headers="headers"
-          :items="desserts"
+          :items="titulos"
+          :search="search"
           :items-per-page="5"
           class="elevation-1"
           no-results-text="Vazio"
-        ></v-data-table>
+        >
+          <template v-slot:item.titulo="{ item }">
+            <v-btn @click="goTo(item)" block>
+              {{ item.titulo }}
+            </v-btn>
+          </template>
+        </v-data-table>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 export default {
   data: () => ({
-    desserts: [{}],
     headers: [
       {
-        text: "Nome"
+        text: "Nome",
+        value: "titulo"
       }
-    ]
-  })
+    ],
+    search: ""
+  }),
+  methods: {
+    ...mapActions("documento", ["ActionGetTitulosDocumento"]),
+    goTo(item) {
+      this.$router.push(`/home/documento/${item.titulo}`);
+    }
+  },
+  computed: {
+    ...mapState("documento", ["titulos"])
+  },
+  mounted() {
+    this.ActionGetTitulosDocumento();
+  }
 };
 </script>
 

@@ -1,108 +1,257 @@
 <template>
-  <v-container>
-    <v-row class=" d-flex justify-center align-center pa-4">
-      <v-col>
-        <v-btn icon to="documento">
-          <v-icon>
-            mdi-arrow-left
-          </v-icon>
-        </v-btn>
-      </v-col>
-      <v-col>
-        <h1>Novo Modelo</h1>
-      </v-col>
-    </v-row>
+  <v-card elevation="10" class="pa-8 ma-8">
+    <v-card-title>
+      Novo modelo de Documento
+    </v-card-title>
     <v-data-table
       :headers="headers"
-      :items="documentos"
-      hide-default-footer
-      v-if="documentos.length != 0"
+      :items="itemDocumentos"
+      class="elevation-1"
     >
-    </v-data-table>
-    <v-card class="pa-6">
-      <v-text-field
-        label="Nome do Campo"
-        outlined
-        shaped
-        v-model="documento.nomeCampo"
-      ></v-text-field>
-      <v-row>
-        <v-col class="pa-2">
-          <v-col class="justify-center">
-            <span>Tipo do Campo</span>
-            <v-radio-group v-model="documento.tipoCampo">
-              <v-radio label="Texto" value="text"></v-radio>
-              <v-radio label="Data" value="data"></v-radio>
-              <v-radio label="Númerico" value="number"></v-radio>
-              <v-radio
-                label="Data e Hora"
-                value="date-time"
-              ></v-radio> </v-radio-group
-          ></v-col>
-        </v-col>
-        <v-divider vertical class="ma-2"></v-divider>
-        <v-col class="pa-2">
-          <v-row class="align-center justify-start">
-            <span> Obrigatório</span>
-            <v-switch v-model="documento.isObrigatorio"></v-switch>
-          </v-row>
-          <v-row>
-            Quantidade maxima
-          </v-row>
-          <v-row
-            ><v-slider
-              v-model="documento.quantidadeMaxima"
-              max="20"
-              step="1"
-              :thumb-size="24"
-              thumb-label
-              append-icon="mdi-plus"
-              prepend-icon="mdi-minus"
-            ></v-slider
-          ></v-row>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-btn block color="success" @click="onSave">
-          <v-icon>mdi-content-save</v-icon>
-          Adicionar campo
-        </v-btn></v-row
-      >
-    </v-card>
-  </v-container>
-</template>
+      <template v-slot:top>
+        <v-toolbar>
+          <v-text-field
+            dense
+            placeholder="Ex: Admissão"
+            label="Nome modelo"
+            clearable
+            hide-details
+            v-model="tituloDocumento"
+          ></v-text-field>
 
+          <v-spacer></v-spacer>
+          <v-dialog v-model="dialog" max-width="500px" persistent>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                Novo Item
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline">{{ formTitle }}</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="editedItem.tituloItemDocumento"
+                        label="Nome do Campo"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      Quantidade Maxima:
+                      <b>{{ editedItem.qtdMaximaRegistros }}</b>
+                      <v-slider
+                        v-model="editedItem.qtdMaximaRegistros"
+                        max="20"
+                        step="1"
+                        :thumb-size="24"
+                        thumb-label
+                        append-icon="mdi-plus"
+                        prepend-icon="mdi-minus"
+                      ></v-slider>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <label for="">É Obrigatório</label>
+                      <v-switch
+                        v-model="editedItem.isItemDocumentoObrigatorio"
+                      ></v-switch>
+                    </v-col>
+                    <v-row align="center"
+                      ><v-col cols="12" sm="6" md="4">
+                        <v-radio-group
+                          v-model="editedItem.tipoCampo"
+                          label="Tipo do Campo"
+                        >
+                          <v-radio label="Texto" value="Texto"></v-radio>
+                          <v-radio
+                            label="Data-Hora"
+                            value="Data e Hora"
+                          ></v-radio>
+                          <v-radio
+                            label="Verdadeiro ou Falso"
+                            value="Sim ou Não"
+                          ></v-radio>
+                          <v-radio label="Número" value="Número"></v-radio>
+                          <v-radio label="Decimal" value="Decimal"></v-radio>
+                        </v-radio-group>
+                      </v-col>
+                      <v-col cols="12" sm="8" md="8">
+                        <v-text-field
+                          label="Descrição"
+                          v-model="editedItem.descricao"
+                        >
+                        </v-text-field>
+                      </v-col>
+                    </v-row>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="close">
+                  Cancel
+                </v-btn>
+                <v-btn color="blue darken-1" text @click="save">
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+          <v-dialog v-model="dialogDelete" max-width="500px">
+            <v-card>
+              <v-card-title class="headline"
+                >Você quer excluir esse item ?</v-card-title
+              >
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="closeDelete"
+                  >Cancel</v-btn
+                >
+                <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+                  >OK</v-btn
+                >
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-toolbar>
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <v-icon small class="mr-2" @click="editItem(item)">
+          mdi-pencil
+        </v-icon>
+        <v-icon small @click="deleteItem(item)">
+          mdi-delete
+        </v-icon>
+      </template>
+      <template v-slot:no-data>
+        Sem itens
+      </template>
+    </v-data-table>
+    <v-btn block color="success" @click="validarESalvarModelo">Salvar</v-btn>
+  </v-card>
+</template>
 <script>
+import { formToApi } from "../utils/formToApi";
 export default {
   data: () => ({
-    documento: {},
-    documentos: [],
+    dialog: false,
+    dialogDelete: false,
+    tituloDocumento: "",
     headers: [
       {
-        text: "Nome do campo",
-        value: "nomeCampo"
+        text: "Nome do Campo",
+        value: "tituloItemDocumento",
+        align: "start"
       },
       {
         text: "Tipo",
-        value: "tipoCampo"
+        value: "tipoCampo",
+        align: "start",
+        sortable: false
       },
       {
-        text: "Obrigatório",
-        value: "isObrigatorio"
+        text: "Obrigatório ?",
+        sortable: false,
+        value: "isItemDocumentoObrigatorio",
+        align: "start"
       },
       {
         text: "Quantidade Maxima",
-        value: "quantidadeMaxima"
+        sortable: false,
+        value: "qtdMaximaRegistros",
+        align: "start"
       },
       {
-        text: "actions"
-      }
-    ]
+        text: "Descrição",
+        value: "descricao",
+        align: "start"
+      },
+      { text: "Ações", value: "actions", sortable: false }
+    ],
+    itemDocumentos: [],
+    editedIndex: -1,
+    editedItem: {
+      tituloItemDocumento: "",
+      isItemDocumentoObrigatorio: false,
+      qtdMaximaRegistros: 1,
+      tipoCampo: 0
+    },
+    defaultItem: {
+      tituloItemDocumento: "",
+      isItemDocumentoObrigatorio: false,
+      qtdMaximaRegistros: 1,
+      tipoCampo: 0
+    }
   }),
+
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? "Novo Item" : "Editar Item";
+    }
+  },
+
+  watch: {
+    dialog(val) {
+      val || this.close();
+    },
+    dialogDelete(val) {
+      val || this.closeDelete();
+    }
+  },
+
   methods: {
-    onSave() {
-      this.documentos.push(this.documento);
-      this.documento = {};
+    editItem(item) {
+      this.editedIndex = this.itemDocumentos.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+
+    deleteItem(item) {
+      this.editedIndex = this.itemDocumentos.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialogDelete = true;
+    },
+
+    deleteItemConfirm() {
+      this.itemDocumentos.splice(this.editedIndex, 1);
+      this.closeDelete();
+    },
+
+    close() {
+      this.dialog = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+
+    closeDelete() {
+      this.dialogDelete = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+
+    save() {
+      if (this.editedIndex > -1) {
+        Object.assign(this.itemDocumentos[this.editedIndex], this.editedItem);
+      } else {
+        this.itemDocumentos.push(this.editedItem);
+      }
+      this.close();
+    },
+
+    validarESalvarModelo() {
+      const modeloDocumento = {
+        tituloDocumento: this.tituloDocumento,
+        itemDocumentos: this.itemDocumentos
+      };
+      formToApi(modeloDocumento);
     }
   }
 };

@@ -6,5 +6,11 @@ export default {
   },
   [types.SET_DOCUMENTO](state, payload) {
     state.documentoSelecionado = payload;
+  },
+  [types.GET_DOCUMENTOS_API](state, payload) {
+    state.documentos = payload
+  },
+  [types.GET_TITULO_DOCUMENTOS](state, payload) {
+    state.titulos = payload
   }
 };
